@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+    <arg name="debug_mode" default="false"/>
+    <arg name="run_standalone" default="false"/>
+    <arg name="run_rviz" default="false"/>
+
+    <include file="$(find spot_micro_motion_cmd)/launch/motion_cmd.launch" >
+        <arg name="debug_mode" value="$(arg debug_mode)"/>
+        <arg name="run_standalone" value="$(arg run_standalone)"/>
+    </include>
+
+    <node name="spotMicroControlMove" pkg="spot_micro_control" type="spotMicroControlMove.py" output="screen">
+    </node>  
+
+    <!-- If run_rviz is true, run the rviz node by including it's launch file -->
+    <group if="$(arg run_rviz)">
+        <include file="$(find spot_micro_rviz)/launch/show_model.launch" />
+    </group>
+
+</launch>
